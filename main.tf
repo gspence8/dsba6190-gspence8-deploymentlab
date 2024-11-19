@@ -31,7 +31,7 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = "vnet-dsba6190-cford38-dev-eastus-${random_integer.deployment_id_suffix.result}"
+  name                = "vnet-dsba6190-gspence8-dev-eastus-${random_integer.deployment_id_suffix.result}"
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -63,7 +63,7 @@ resource "azurerm_storage_account" "storage" {
 }
 
 resource "azurerm_sql_server" "sql" {
-  name                         = "sql-dsba6190-cford38-dev-001"
+  name                         = "sqldsba6190gspence8dev${random_integer.deployment_id_suffix.result}"
   resource_group_name          = azurerm_resource_group.rg.name
   location                     = azurerm_resource_group.rg.location
   version                      = "12.0"
@@ -72,7 +72,7 @@ resource "azurerm_sql_server" "sql" {
 }
 
 resource "azurerm_sql_database" "database" {
-  name                = "db-dsba6190-cford38-dev-001"
+  name                = "dbdsba6190gspence8dev${random_integer.deployment_id_suffix.result}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   server_name         = azurerm_sql_server.sql.name
