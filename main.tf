@@ -58,11 +58,12 @@ resource "azurerm_storage_account" "storage" {
   tags                     = local.tags
 
   network_rules {
+    default_action             = "Deny" # or "Allow"
     virtual_network_subnet_ids = [azurerm_subnet.subnet.id]
   }  
 }
 
-resource "azurerm_sql_server" "sql" {
+resource "azurerm_mssql_server" "sql" {
   name                         = "sqldsba6190gspence8dev${random_integer.deployment_id_suffix.result}"
   resource_group_name          = azurerm_resource_group.rg.name
   location                     = azurerm_resource_group.rg.location
@@ -71,7 +72,7 @@ resource "azurerm_sql_server" "sql" {
   administrator_login_password = "P@ssword1234"  # Update with a secure password
 }
 
-resource "azurerm_sql_database" "database" {
+resource "azurerm_mssql_database" "database" {
   name                = "dbdsba6190gspence8dev${random_integer.deployment_id_suffix.result}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
@@ -79,7 +80,7 @@ resource "azurerm_sql_database" "database" {
   sku_name            = "Basic"
 }
 
-resource "azurerm_sql_virtual_network_rule" "vnet_rule" {
+resource "azurerm_mssql_virtual_network_rule" "vnet_rule" {
   name             = "sql-vnet-rule"
   resource_group_name = azurerm_resource_group.rg.name
   server_name      = azurerm_sql_server.sql.name
