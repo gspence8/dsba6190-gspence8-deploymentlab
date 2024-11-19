@@ -27,7 +27,7 @@ resource "azurerm_resource_group" "rg" {
   name     = "rg-dsba6190-gspence8-dev-eastus-${random_integer.deployment_id_suffix.result}"
   location = "East US"
 
-  tags = local.tags
+  tags     = local.tags
 }
 
 resource "azurerm_virtual_network" "vnet" {
@@ -38,7 +38,7 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 resource "azurerm_subnet" "subnet" {
-  name                 = "subnet-001"
+  name                 = "subnet-${random_integer.deployment_id_suffix.result}"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.2.0/24"]
@@ -54,8 +54,8 @@ resource "azurerm_storage_account" "storage" {
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
-
-  tags = local.tags
+  is_hns_enabled           = true # Hierarchical namespace
+  tags                     = local.tags
 
   network_rules {
     virtual_network_subnet_ids = [azurerm_subnet.subnet.id]
