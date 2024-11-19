@@ -85,6 +85,6 @@ resource "azurerm_mssql_database" "database" {
 
 resource "azurerm_mssql_virtual_network_rule" "vnet_rule" {
   name      = "sql-vnet-rule"
-  server_id = azurerm_sql_server.sql.id
+  server_id = azurerm_mssql_server.sql.id
   subnet_id = azurerm_subnet.subnet.id
 }
