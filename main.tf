@@ -27,7 +27,7 @@ resource "azurerm_resource_group" "rg" {
   name     = "rg-dsba6190-gspence8-dev-eastus-${random_integer.deployment_id_suffix.result}"
   location = "East US"
 
-  tags     = local.tags
+  tags = local.tags
 }
 
 resource "azurerm_virtual_network" "vnet" {
@@ -60,7 +60,7 @@ resource "azurerm_storage_account" "storage" {
   network_rules {
     default_action             = "Deny" # or "Allow"
     virtual_network_subnet_ids = [azurerm_subnet.subnet.id]
-  }  
+  }
 }
 
 resource "azurerm_mssql_server" "sql" {
@@ -68,8 +68,8 @@ resource "azurerm_mssql_server" "sql" {
   resource_group_name          = azurerm_resource_group.rg.name
   location                     = azurerm_resource_group.rg.location
   version                      = "12.0"
-  administrator_login          = "sqladmin"   # Update with your admin username
-  administrator_login_password = "P@ssword1234"  # Update with a secure password
+  administrator_login          = "sqladmin"     # Update with your admin username
+  administrator_login_password = "P@ssword1234" # Update with a secure password
 }
 
 resource "azurerm_mssql_database" "database" {
@@ -81,8 +81,8 @@ resource "azurerm_mssql_database" "database" {
 }
 
 resource "azurerm_mssql_virtual_network_rule" "vnet_rule" {
-  name             = "sql-vnet-rule"
+  name                = "sql-vnet-rule"
   resource_group_name = azurerm_resource_group.rg.name
-  server_name      = azurerm_sql_server.sql.name
-  subnet_id        = azurerm_subnet.subnet.id
+  server_name         = azurerm_sql_server.sql.name
+  subnet_id           = azurerm_subnet.subnet.id
 }
