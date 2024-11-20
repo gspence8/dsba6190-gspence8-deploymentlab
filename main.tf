@@ -49,7 +49,7 @@ resource "azurerm_subnet" "subnet" {
 // Storage Account
 
 resource "azurerm_storage_account" "storage" {
-  name                     = "stodsba6190gspence8dev${random_integer.deployment_id_suffix.result}"
+  name                     = "stodsba6190gspence8${random_integer.deployment_id_suffix.result}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
